@@ -76,6 +76,7 @@ def create_stack():
         new_events = [e for e in all_current_events if e not in last_update_events]
         last_update_events = all_current_events
         yield new_events
+        time.sleep(0.2)
         # grab the stack in its new updated state
         stack = _cf.describe_stacks('BitnamiWordpressStack')[0]
         if time.time() > timeout:
