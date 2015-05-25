@@ -1,0 +1,39 @@
+<!doctype html>
+<title>Mini Launch Pad</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>Stack Creation Progress: </h1>
+
+  <p><a href="{{url_for('hello')}}">Back</a></p>
+  
+  <p>Launching AWS WordPress server stack. Here's the progress details:<p> 
+
+  <div class="progress-display">
+    <dl>
+    {% for update in event_updates %}
+      {% for e in update %}
+        {% if 'http' in e %}
+          <dt><b>Done!</b></dt>
+          <dt><b>WordPress server is up and running at:</b> <a href="{{e}}">{{e}}</a></dt>
+          <dt><b>You can stop the VM by clicking the button below:</b></dt>
+          <br>
+          <dt><form action="{{ url_for('shutdown_vm') }}" method=post class=shutdown_vm>
+              <input type=submit value="Stop VM ">
+            </form>
+          </dt>
+        {% else %}
+          <dt><b>Resource: </b> {{e.split()[0]}}</dt> 
+          <dt><b>Status: </b> {{e.split()[1]}}</dt>
+          <dt>Loading...</dt>
+          <br>
+        {% endif %}
+      {% endfor %}  
+    {% endfor %}
+    </dl>
+  </div>
+
+    
+
+  
+
+</div>

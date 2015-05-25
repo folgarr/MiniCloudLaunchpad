@@ -1,0 +1,28 @@
+<!doctype html>
+<title>Mini Launch Pad</title>
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>Launch Wordpress Stack</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('create_stack') }}" method=post class="create-stack">
+    <ul>
+      <li>Access Key: <input type=text size=50 name=acc_key></li>
+      <br>
+      <li>Secret Access Key: <input type=text size=50 name=sec_acc_key></li>
+      <br>
+      <input type=submit value=Launch>
+    </ul>
+
+  </form>
+</div>
