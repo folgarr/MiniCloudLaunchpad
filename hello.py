@@ -19,9 +19,8 @@ class CredentialsError(Exception):
 
 @app.route('/')
 def hello():
-  if not session.get('session_cache_id') or not session_cache.get(session['session_cache_id']):
-    session['session_cache_id'] = uuid.uuid4().hex
-    _cache_session(session)
+  session['session_cache_id'] = uuid.uuid4().hex
+  _cache_session(session)
   return render_template('index.html')
 
 @app.route('/create_stack', methods=['POST'])
