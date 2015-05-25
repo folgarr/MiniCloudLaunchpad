@@ -10,21 +10,21 @@ import os
 
 default_region = 'us-east-1'
 cf_template_url = 'https://bitnami.com/cloudformation/wordpress.template'
-application = Flask(__name__)
-application.secret_key = "\xd4\xc0Pm\\\x11\x84f\x1c\x1a\xe50\xe6j-*\xf7[\x1f]\x1a\x8d\x97P"
+app = Flask(__name__)
+app.secret_key = "\xd4\xc0Pm\\\x11\x84f\x1c\x1a\xe50\xe6j-*\xf7[\x1f]\x1a\x8d\x97P"
 session_cache = {}
 
 class CredentialsError(Exception):
   pass
 
-@application.route('/')
+@app.route('/')
 def hello():
   if not session.get('session_cache_id') or not session_cache.get(session['session_cache_id']):
     session['session_cache_id'] = uuid.uuid4().hex
     _cache_session(session)
   return render_template('index.html')
 
-@application.route('/create_stack', methods=['POST'])
+@app.route('/create_stack', methods=['POST'])
 def create_stack():
   """
   Launches the creation of a WordPress stack using AWS CloudFormation.
@@ -89,7 +89,7 @@ def create_stack():
   except Exception as e:
     return str(e)
 
-@application.route('/shutdown_vm', methods=['POST'])
+@app.route('/shutdown_vm', methods=['POST'])
 def shutdown_vm():
   """
   Stops the EC2 instance associated with the WordPress stack
@@ -163,12 +163,12 @@ def stream_template(template_name, **context):
   Renders the template on the client side piece by piece, where
   each piece corresponds to the output of a generator.
   """
-  application.update_template_context(context)
-  t = application.jinja_env.get_template(template_name)
+  app.update_template_context(context)
+  t = app.jinja_env.get_template(template_name)
   rv = t.stream(context)
   rv.enable_buffering(5)
   return rv
 
 if __name__ == "__main__":
-  application.run()
+  app.run()
 
