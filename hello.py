@@ -78,7 +78,6 @@ def create_stack():
         yield new_events
         # grab the stack in its new updated state
         stack = _cf.describe_stacks('BitnamiWordpressStack')[0]
-        time.sleep(2)
         if time.time() > timeout:
           yield ["Error: time limit of 5 minutes exceed in creating the stack."]
           break
