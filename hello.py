@@ -11,7 +11,6 @@ import os
 default_region = 'us-east-1'
 cf_template_url = 'https://bitnami.com/cloudformation/wordpress.template'
 app = Flask(__name__)
-app.secret_key = "\xd4\xc0Pm\\\x11\x84f\x1c\x1a\xe50\xe6j-*\xf7[\x1f]\x1a\x8d\x97P"
 session_cache = {}
 
 class CredentialsError(Exception):
